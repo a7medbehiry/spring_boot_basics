@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import com.amb.amb.Constants;
 import com.amb.amb.Staff;
 import com.amb.amb.repository.StaffRepository;
 import jakarta.validation.Valid;
@@ -19,9 +18,9 @@ public class StaffController {
 
     @GetMapping("/addnewstaff")
     public String addNewStaff(Model model, @RequestParam(required = false) String id) {
-        int index = staffRepository.getStaffIndex(id);
-        model.addAttribute("addnewstaff",
-                index == Constants.NO_MATCH ? new Staff() : staffRepository.getStaffIndex(id));
+        Staff staff = staffRepository.getStaffById(id);
+        model.addAttribute("addnewstaff", staff == null ? new Staff() : staff);
+        model.addAttribute("isUpdate", staff != null);
         return "addnewstaff";
     }
 
@@ -32,7 +31,7 @@ public class StaffController {
             return "addnewstaff";
         }
 
-        staffRepository.addStaff(staff);
+        staffRepository.save(staff);
         return "redirect:/staffdetails";
     }
 

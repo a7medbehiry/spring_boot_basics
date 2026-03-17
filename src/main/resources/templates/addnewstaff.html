@@ -138,7 +138,7 @@
 
 <body>
     <div class="login-card">
-        <h2>Add New Staff</h2>
+        <h2 th:text="${isUpdate} ? 'Update Staff' : 'Add New Staff'">Add New Staff</h2>
 
         <form th:object="${addnewstaff}" method="post" th:action="@{/dataSubmitForm}">
             <div class="form-group">
@@ -165,7 +165,7 @@
 
             <a th:href="@{/staffdetails}" role="button">Staff Details</a>
 
-            <button type="submit">Add New Staff</button>
+            <button type="submit" th:text="${isUpdate} ? 'Update Staff' : 'Add New Staff'">Add New Staff</button>
         </form>
 
         <div class="footer">
