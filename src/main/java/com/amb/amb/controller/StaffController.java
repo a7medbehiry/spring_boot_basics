@@ -32,7 +32,7 @@ public class StaffController {
             return "addnewstaff";
         }
 
-        staffService.save(staff);
+        staffService.submitStaff(staff);
         return "redirect:/staffdetails";
     }
 

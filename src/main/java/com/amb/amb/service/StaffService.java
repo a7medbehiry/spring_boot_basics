@@ -14,7 +14,7 @@ public class StaffService {
         staffRepository.addStaff(staff);
     }
 
-    public void save(Staff staff) {
+    public void submitStaff(Staff staff) {
         int index = getStaffIndex(staff.getId());
         if (index == Constants.NO_MATCH) {
             staffRepository.addStaff(staff);
