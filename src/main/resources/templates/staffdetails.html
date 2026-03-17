@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Details</title>
+
+
+</head>
+
+<style>
+    table,
+    th,
+    td {
+        border: 1px solid black;
+    }
+</style>
+
+<body>
+    <h2>Staff Details</h2>
+
+    <table style="width: 100%;">
+        <tr>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Salary</th>
+            <th>Show</th>
+        </tr>
+        <!-- 
+        <tr th:object="${staff}">
+            <td th:text="*{name}"></td>
+            <td th:text="*{title}"></td>
+            <td>
+                true
+                <p th:if="*{salary > 50000}">
+                    High Salary
+                </p>
+
+                false
+                <p th:unless="*{salary > 50000}">
+                    Low Salary
+                </p>
+
+
+                <p th:text="*{salary > 50000 ? 'fol' : 'ya3'}"></p>
+            </td>
+        </tr>
+         -->
+
+
+        <!-- <tr th:each="staff : ${allStaff}">
+            <td th:text="${staff.name}"></td>
+            <td th:text="${staff.title}"></td>
+            <td th:text="${staff.salary}"></td>
+        </tr> -->
+
+        <tr th:each="staff : ${allStaff}">
+            <td th:text="${staff.name}"></td>
+            <td th:text="${staff.title}"></td>
+            <td th:text="${staff.salary}"></td>
+            <td>
+                <a th:href="@{/addnewstaff?id=} + ${staff.id}">Edit</a>
+            </td>
+        </tr>
+    </table>
+
+    <!-- <div th:switch="*{staff.name}">
+        <p th:case="'Ahmed'">Hi, Ahmed</p>
+        <p th:case="'Mohamed'">Hi, Mohamed</p>
+        <p th:case="*">Hi, Unknown</p>
+
+    </div> -->
+
+
+
+</body>
+
+</html>
