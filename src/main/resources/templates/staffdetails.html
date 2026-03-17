@@ -1,79 +1,257 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staff Details</title>
+    <title>Staff Directory | AMB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366F1;
+            --primary-hover: #4F46E5;
+            --danger: #EF4444;
+            --danger-hover: #DC2626;
+            --bg: #0F172A;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --border: rgba(255, 255, 255, 0.1);
+        }
 
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 50%),
+                radial-gradient(at 100% 100%, hsla(225, 39%, 30%, 1) 0, transparent 50%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            color: var(--text-main);
+            padding: 2rem 1rem;
+        }
 
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 2.25rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            background: linear-gradient(to right, #818CF8, #C084FC);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: 1px solid transparent;
+            font-size: 0.875rem;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.39);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.23);
+        }
+
+        .btn-danger-outline {
+            background-color: transparent;
+            color: var(--danger);
+            border-color: rgba(239, 68, 68, 0.2);
+        }
+
+        .btn-danger-outline:hover {
+            background-color: rgba(239, 68, 68, 0.1);
+            border-color: var(--danger);
+        }
+
+        .table-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 1.25rem 1.5rem;
+            background-color: rgba(255, 255, 255, 0.03);
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9375rem;
+            color: var(--text-main);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .salary-badge {
+            background: rgba(34, 197, 94, 0.1);
+            color: #4ADE80;
+            padding: 0.25rem 0.625rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 0.8125rem;
+        }
+
+        .action-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .action-link {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .edit-link {
+            color: #818CF8;
+        }
+
+        .edit-link:hover {
+            color: #A5B4FC;
+        }
+
+        .delete-link {
+            color: #F87171;
+        }
+
+        .delete-link:hover {
+            color: #FCA5A5;
+        }
+
+        .empty-state {
+            padding: 4rem 2rem;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .empty-state svg {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+    </style>
 </head>
 
-<style>
-    table,
-    th,
-    td {
-        border: 1px solid black;
-    }
-</style>
-
 <body>
-    <h2>Staff Details</h2>
+    <div class="container">
+        <header>
+            <h2>Staff Directory</h2>
+            <div class="btn-group">
+                <a th:href="@{/addnewstaff}" class="btn btn-primary">+ New Staff</a>
+                <a th:href="@{/deleteAllStaff}" 
+                   class="btn btn-danger-outline" 
+                   th:if="${not #lists.isEmpty(allStaff)}"
+                   onclick="return confirm('⚠️ CRITICAL ACTION: Are you absolutely sure you want to delete the entire directory? This cannot be undone.')">
+                   Delete All
+                </a>
+            </div>
+        </header>
 
-    <table style="width: 100%;">
-        <tr>
-            <th>Name</th>
-            <th>Title</th>
-            <th>Salary</th>
-            <th>Show</th>
-        </tr>
-        <!-- 
-        <tr th:object="${staff}">
-            <td th:text="*{name}"></td>
-            <td th:text="*{title}"></td>
-            <td>
-                true
-                <p th:if="*{salary > 50000}">
-                    High Salary
-                </p>
+        <div class="table-card">
+            <div th:if="${#lists.isEmpty(allStaff)}" class="empty-state">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                </svg>
+                <p>No staff members found. Start by adding one!</p>
+            </div>
 
-                false
-                <p th:unless="*{salary > 50000}">
-                    Low Salary
-                </p>
-
-
-                <p th:text="*{salary > 50000 ? 'fol' : 'ya3'}"></p>
-            </td>
-        </tr>
-         -->
-
-
-        <!-- <tr th:each="staff : ${allStaff}">
-            <td th:text="${staff.name}"></td>
-            <td th:text="${staff.title}"></td>
-            <td th:text="${staff.salary}"></td>
-        </tr> -->
-
-        <tr th:each="staff : ${allStaff}">
-            <td th:text="${staff.name}"></td>
-            <td th:text="${staff.title}"></td>
-            <td th:text="${staff.salary}"></td>
-            <td>
-                <a th:href="@{/addnewstaff?id=} + ${staff.id}">Edit</a>
-            </td>
-        </tr>
-    </table>
-
-    <!-- <div th:switch="*{staff.name}">
-        <p th:case="'Ahmed'">Hi, Ahmed</p>
-        <p th:case="'Mohamed'">Hi, Mohamed</p>
-        <p th:case="*">Hi, Unknown</p>
-
-    </div> -->
-
-
-
+            <table th:if="${not #lists.isEmpty(allStaff)}">
+                <thead>
+                    <tr>
+                        <th>Employee</th>
+                        <th>Position</th>
+                        <th>Salary</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="staff : ${allStaff}">
+                        <td>
+                            <div style="font-weight: 600;" th:text="${staff.name}"></div>
+                            <div style="font-size: 0.75rem; color: var(--text-muted);" th:text="'ID: ' + ${#strings.substring(staff.id, 0, 8)} + '...'"></div>
+                        </td>
+                        <td th:text="${staff.title}"></td>
+                        <td>
+                            <span class="salary-badge" th:text="'$' + ${#numbers.formatDecimal(staff.salary, 1, 'COMMA', 2, 'POINT')}"></span>
+                        </td>
+                        <td>
+                            <div class="action-links">
+                                <a th:href="@{/addnewstaff(id=${staff.id})}" class="action-link edit-link">Edit</a>
+                                <a th:href="@{/deleteStaff(id=${staff.id})}" 
+                                   class="action-link delete-link" 
+                                   onclick="return confirm('Are you sure you want to delete this employee?')">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 
 </html>
