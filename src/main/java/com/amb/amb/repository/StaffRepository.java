@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import com.amb.amb.Staff;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class StaffRepository {
     private List<Staff> allStaff = new ArrayList<>();
 

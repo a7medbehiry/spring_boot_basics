@@ -2,13 +2,17 @@ package com.amb.amb.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.amb.amb.Constants;
 import com.amb.amb.Staff;
 import com.amb.amb.repository.StaffRepository;
 
+@Service
 public class StaffService {
-
-    private StaffRepository staffRepository = new StaffRepository();
+    @Autowired
+    private StaffRepository staffRepository;
 
     public void addStaff(Staff staff) {
         staffRepository.addStaff(staff);
